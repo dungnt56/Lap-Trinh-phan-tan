@@ -1,5 +1,8 @@
 package ThucHanh3;
 
+import BakeryTest.ReaderWritersProblem;
+
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,6 +13,7 @@ public class Semaphore {
     static int NUM_ARRAY = 10;
 
     static int[] arr = new int[NUM_ARRAY];
+//    static ArrayList<Integer> arr = n;
 
     static void startRead() throws InterruptedException {
         readLock.acquire();
@@ -45,11 +49,11 @@ public class Semaphore {
                 for (int i = 0; i < arr.length; i++) {
                     Long duration = (long) (Math.random() * 200);
                     int indexArr = random.nextInt(NUM_ARRAY);
+                    if (isPrimeNumber(arr[indexArr])) {
+                        System.out.println("R "+Thread.currentThread().getName() + ": " + arr[indexArr] +" - la SNT - Time " + duration );
+                    }
 
                     arr[indexArr] = 0;
-                    if (isPrimeNumber(arr[i])) {
-                        System.out.println("R "+Thread.currentThread().getName() + ": " + arr[i] +" - la SNT - Time " + duration );
-                    }
                     Thread.sleep(duration);
                 }
 
@@ -119,8 +123,8 @@ public class Semaphore {
         Thread[] threadRead = new Thread[h];
         Thread[] threadWrite = new Thread[k];
 
-        ReaderWritersProblem.Read read = new ReaderWritersProblem.Read();
-        ReaderWritersProblem.Write write = new ReaderWritersProblem.Write();
+        Semaphore.Read read = new Semaphore.Read();
+        Semaphore.Write write = new Semaphore.Write();
         for(int i = 0 ; i < k; i++) {
             threadWrite[i] = new Thread(write);
             threadWrite[i].setName("T"+i);
@@ -129,11 +133,13 @@ public class Semaphore {
             threadRead[i] = new Thread(read);
             threadRead[i].setName("T"+i);
         }
-        for(int i = 0 ; i < k; i++) {
-            threadWrite[i].start();
-        }
-        for(int i = 0 ; i < h; i++) {
-            threadRead[i].start();
+        while (true){
+            for(int i = 0 ; i < k; i++) {
+                threadWrite[i].start();
+            }
+            for(int i = 0 ; i < h; i++) {
+                threadRead[i].start();
+            }
         }
 
 
