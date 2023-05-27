@@ -15,9 +15,12 @@ public class ThreadClass extends Thread{
     void CS() {
         System.out.println("Thread " + threadID + " bat dau");
         for (int i = 0; i < 5; i++) {
+            // Sinh số ngẫu nhiên
             double randomDouble = Math.random();
             randomDouble = randomDouble * 100 + 1;
             int randomInt = (int) randomDouble;
+
+            //todo: Đưa số ngẫu nhiên vào mảng dùng chung (Mảng A)
             A.add(randomInt);
         }
     }
