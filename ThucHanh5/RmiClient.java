@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class RmiClient {
     public static void main(String[] args) {
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            CalculatorSumOfArray calculator = (CalculatorSumOfArray) registry.lookup("SumCalculator");
+            Registry registry = LocateRegistry.getRegistry("localhost", 8888);
+            CalculatorSumOfArray calculator = (CalculatorSumOfArray) registry.lookup("abc");
 
             while (true){
                 int sizeOfArray = 5;
